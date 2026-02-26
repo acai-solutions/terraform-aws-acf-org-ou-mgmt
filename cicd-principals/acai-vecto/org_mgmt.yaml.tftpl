@@ -53,7 +53,7 @@ $${resource_tags_block}
                   - "ssm:ListTagsForResource"
                   - "ssm:RemoveTagsFromResource"
                   - "ssm:DeleteParameter"
-                Resource: "arn:aws:ssm:*:*:parameter/acai/acf-org-ou-mgmt/moduleversion"
+                Resource: !Sub "arn:${AWS::Partition}:ssm:*:*:parameter/acai/acf-org-ou-mgmt/moduleversion"
               - Sid: "SSMDescribeParameters"
                 Effect: Allow
                 Action:
