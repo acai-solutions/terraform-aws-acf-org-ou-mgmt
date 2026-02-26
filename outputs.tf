@@ -52,20 +52,6 @@ output "ou_ids_to_ou_path" {
   )
 }
 
-output "organizational_units_paths_ids" {
-  description = "Legacy: Map of full OU-Path and OU-ID."
-  value = merge(
-    {
-      "/root" = local.root_ou_id
-    },
-    { for path, ou in aws_organizations_organizational_unit.level_1_ous : path => ou.id },
-    { for path, ou in aws_organizations_organizational_unit.level_2_ous : path => ou.id },
-    { for path, ou in aws_organizations_organizational_unit.level_3_ous : path => ou.id },
-    { for path, ou in aws_organizations_organizational_unit.level_4_ous : path => ou.id },
-    { for path, ou in aws_organizations_organizational_unit.level_5_ous : path => ou.id }
-  )
-}
-
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ OU-Level Details
