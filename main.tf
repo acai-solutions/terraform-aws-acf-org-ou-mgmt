@@ -29,17 +29,35 @@ terraform {
 data "aws_organizations_organization" "organization" {}
 
 
+
+# ---------------------------------------------------------------------------------------------------------------------
+# ¦ MODULE VERSION AS PARAMETER STORE ENTRY
+# ---------------------------------------------------------------------------------------------------------------------
+locals {
+  module_version = /*inject_version_start*/ "1.3.0" /*inject_version_end*/
+}
+
+resource "aws_ssm_parameter" "product_version" {
+  #checkov:skip=CKV2_AWS_34: AWS SSM Parameter should be Encrypted not required for module version
+  name           = lower("/acai/acf-org-ou-mgmt/moduleversion")
+  type           = "String"
+  insecure_value = local.module_version
+  tags           = local.module_tags
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ OU LEVEL 1
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
   root_ou_id = data.aws_organizations_organization.organization.roots[0].id
-  module_tags = {
-    "module_provider" = "ACAI GmbH",
-    "module_name"     = "terraform-aws-acf-org-ou-mgmt",
-    "module_source"   = "github.com/acai-consulting/terraform-aws-acf-org-ou-mgmt",
-    "module_version"  = /*inject_version_start*/ "1.2.0" /*inject_version_end*/
-  }
+  module_tags = merge(
+    var.resource_tags,
+    {
+      "module_provider" = "ACAI GmbH",
+      "module_name"     = "terraform-aws-acf-org-ou-mgmt",
+      "module_source"   = "github.com/acai-solutions/terraform-aws-acf-org-ou-mgmt",
+    }
+  )
 
   level_1_ou_transformed = [
     for level_1_ou in var.organizational_units.level1_units :
@@ -67,7 +85,7 @@ locals {
     length(ou.scp_ids) == 0 ? [] : [
       for scp_id in ou.scp_ids : {
         "key"     = "${ou.path}:${scp_id}",
-        "ou_path" = ou.path,
+        "ou_path" = "${ou.path}/",
         "ou_id"   = aws_organizations_organizational_unit.level_1_ous[ou.path].id,
         "scp_id"  = scp_id
       }
@@ -121,7 +139,7 @@ locals {
     length(ou.scp_ids) == 0 ? [] : [
       for scp_id in ou.scp_ids : {
         "key"     = "${ou.path}:${scp_id}",
-        "ou_path" = ou.path,
+        "ou_path" = "${ou.path}/",
         "ou_id"   = aws_organizations_organizational_unit.level_2_ous[ou.path].id,
         "scp_id"  = scp_id
       }
@@ -176,7 +194,7 @@ locals {
     length(ou.scp_ids) == 0 ? [] : [
       for scp_id in ou.scp_ids : {
         "key"     = "${ou.path}:${scp_id}",
-        "ou_path" = ou.path,
+        "ou_path" = "${ou.path}/",
         "ou_id"   = aws_organizations_organizational_unit.level_3_ous[ou.path].id,
         "scp_id"  = scp_id
       }
@@ -231,7 +249,7 @@ locals {
     length(ou.scp_ids) == 0 ? [] : [
       for scp_id in ou.scp_ids : {
         "key"     = "${ou.path}:${scp_id}",
-        "ou_path" = ou.path,
+        "ou_path" = "${ou.path}/",
         "ou_id"   = aws_organizations_organizational_unit.level_4_ous[ou.path].id,
         "scp_id"  = scp_id
       }
@@ -285,7 +303,7 @@ locals {
     length(ou.scp_ids) == 0 ? [] : [
       for scp_id in ou.scp_ids : {
         "key"     = "${ou.path}:${scp_id}",
-        "ou_path" = ou.path,
+        "ou_path" = "${ou.path}/",
         "ou_id"   = aws_organizations_organizational_unit.level_5_ous[ou.path].id,
         "scp_id"  = scp_id
       }

@@ -6,6 +6,7 @@
 **/.terraform/*
 
 # .tfstate files
+run.ps1
 *.tfstate
 *.tfstate.*
 

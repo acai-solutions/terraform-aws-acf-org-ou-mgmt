@@ -80,4 +80,28 @@ data "aws_iam_policy_document" "org_structure_policy" {
     ]
     resources = ["*"]
   }
+
+  statement {
+    sid    = "MaintainModuleVersionSSMParameter"
+    effect = "Allow"
+    actions = [
+      "ssm:PutParameter",
+      "ssm:GetParameter",
+      "ssm:GetParameters",
+      "ssm:AddTagsToResource",
+      "ssm:ListTagsForResource",
+      "ssm:RemoveTagsFromResource",
+      "ssm:DeleteParameter",
+    ]
+    resources = ["arn:aws:ssm:*:*:parameter/acai/acf-org-ou-mgmt/moduleversion"]
+  }
+
+  statement {
+    sid    = "SSMDescribeParameters"
+    effect = "Allow"
+    actions = [
+      "ssm:DescribeParameters",
+    ]
+    resources = ["*"]
+  }
 }
