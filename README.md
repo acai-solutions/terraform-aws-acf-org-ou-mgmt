@@ -144,7 +144,6 @@ No modules.
 | <a name="output_level_4_ous_details"></a> [level\_4\_ous\_details](#output\_level\_4\_ous\_details) | Details of Level 4 Organizational Units. |
 | <a name="output_level_5_ous_details"></a> [level\_5\_ous\_details](#output\_level\_5\_ous\_details) | Details of Level 5 Organizational Units. |
 | <a name="output_organization_id"></a> [organization\_id](#output\_organization\_id) | The ID of the AWS Organization. |
-| <a name="output_organizational_units_paths_ids"></a> [organizational\_units\_paths\_ids](#output\_organizational\_units\_paths\_ids) | Legacy: Map of full OU-Path and OU-ID. |
 | <a name="output_ou_ids_to_ou_path"></a> [ou\_ids\_to\_ou\_path](#output\_ou\_ids\_to\_ou\_path) | Map of OU-ID to full OU-Path in the format '/root/a/b/'. |
 | <a name="output_ou_paths_to_ou_id"></a> [ou\_paths\_to\_ou\_id](#output\_ou\_paths\_to\_ou\_id) | Map of full OU-Path in the format '/root/a/b/' to OU-ID. |
 | <a name="output_ou_scp_assignment"></a> [ou\_scp\_assignment](#output\_ou\_scp\_assignment) | SCP assignments. |
