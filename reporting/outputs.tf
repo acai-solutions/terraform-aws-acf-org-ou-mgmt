@@ -35,7 +35,7 @@ output "level_5_ous_paths" {
 }
 
 
-output "ous_paths" {
+output "ou_paths_to_ou_id" {
   value = merge(
     local.level_0_ous_path,
     local.level_1_ous_paths,
