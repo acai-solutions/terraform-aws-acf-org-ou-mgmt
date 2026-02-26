@@ -30,7 +30,8 @@ func TestExampleComplete(t *testing.T) {
 	t.Log("Starting Sample Module test")
 
 	terraformDir := "../../examples/complete"
-	backendConfig := loadBackendConfig(t)
+	stateKey := "terratest/terraform-aws-acf-org-ou-mgmt.tfstate"
+	backendConfig := loadBackendConfig(t, stateKey)
 
 	// Create IAM Role
 	terraformPreparation := &terraform.Options{

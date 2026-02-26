@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func loadBackendConfig(t *testing.T) map[string]interface{} {
+func loadBackendConfig(t *testing.T, stateKey string) map[string]interface{} {
 	backendConfig := map[string]interface{}{}
 	data, err := os.ReadFile("backend.json")
 	if err != nil {
@@ -15,6 +15,9 @@ func loadBackendConfig(t *testing.T) map[string]interface{} {
 	}
 	if err := json.Unmarshal(data, &backendConfig); err != nil {
 		t.Fatalf("Failed to parse backend.json: %v", err)
+	}
+	if stateKey != "" {
+		backendConfig["key"] = stateKey
 	}
 	return backendConfig
 }
