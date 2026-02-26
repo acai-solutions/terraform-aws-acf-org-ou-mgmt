@@ -46,7 +46,7 @@ module "create_provisioner" {
 }
 
 provider "aws" {
-  region = "eu-central-1"
+  region = var.aws_region
   alias  = "cicd_provisioner"
   assume_role {
     role_arn = module.create_provisioner.iam_role_arn
