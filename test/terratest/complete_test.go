@@ -30,12 +30,15 @@ func TestExampleComplete(t *testing.T) {
 	t.Log("Starting Sample Module test")
 
 	terraformDir := "../../examples/complete"
+	stateKey := "terratest/terraform-aws-acf-org-ou-mgmt.tfstate"
+	backendConfig := loadBackendConfig(t, stateKey)
 
 	// Create IAM Role
 	terraformPreparation := &terraform.Options{
-		TerraformDir: terraformDir,
-		NoColor:      false,
-		Lock:         true,
+		TerraformDir:  terraformDir,
+		NoColor:       false,
+		Lock:          true,
+		BackendConfig: backendConfig,
 		Targets: []string{
 			"module.create_provisioner",
 			"aws_organizations_policy.scp_example",
@@ -44,9 +47,10 @@ func TestExampleComplete(t *testing.T) {
 	terraform.InitAndApply(t, terraformPreparation)
 
 	terraformModule := &terraform.Options{
-		TerraformDir: terraformDir,
-		NoColor:      false,
-		Lock:         true,
+		TerraformDir:  terraformDir,
+		NoColor:       false,
+		Lock:          true,
+		BackendConfig: backendConfig,
 		Targets: []string{
 			"module.example_complete",
 		},
@@ -54,9 +58,10 @@ func TestExampleComplete(t *testing.T) {
 	terraform.InitAndApply(t, terraformModule)
 
 	terraformReport := &terraform.Options{
-		TerraformDir: terraformDir,
-		NoColor:      false,
-		Lock:         true,
+		TerraformDir:  terraformDir,
+		NoColor:       false,
+		Lock:          true,
+		BackendConfig: backendConfig,
 		Targets: []string{
 			"module.example_reporting",
 		},

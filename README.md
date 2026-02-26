@@ -124,6 +124,7 @@ No modules.
 | [aws_organizations_policy_attachment.level_3_ous_scp_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_policy_attachment) | resource |
 | [aws_organizations_policy_attachment.level_4_ous_scp_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_policy_attachment) | resource |
 | [aws_organizations_policy_attachment.level_5_ous_scp_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_policy_attachment) | resource |
+| [aws_ssm_parameter.product_version](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
 | [aws_organizations_organization.organization](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/organizations_organization) | data source |
 
 ## Inputs
@@ -131,6 +132,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_organizational_units"></a> [organizational\_units](#input\_organizational\_units) | The organization with the tree of organizational units and their tags. OU-Names are case-sensitive!!! | <pre>object({<br/>    level1_units = optional(list(object({<br/>      name    = string,<br/>      scp_ids = optional(list(string), [])<br/>      tags    = optional(map(string), {}),<br/>      level2_units = optional(list(object({<br/>        name    = string,<br/>        scp_ids = optional(list(string), [])<br/>        tags    = optional(map(string), {}),<br/>        level3_units = optional(list(object({<br/>          name    = string,<br/>          scp_ids = optional(list(string), [])<br/>          tags    = optional(map(string), {}),<br/>          level4_units = optional(list(object({<br/>            name    = string,<br/>            scp_ids = optional(list(string), [])<br/>            tags    = optional(map(string), {}),<br/>            level5_units = optional(list(object({<br/>              name    = string,<br/>              scp_ids = optional(list(string), [])<br/>              tags    = optional(map(string), {}),<br/>            })), [])<br/>          })), [])<br/>        })), [])<br/>      })), [])<br/>    })), [])<br/>  })</pre> | `null` | no |
+| <a name="input_resource_tags"></a> [resource\_tags](#input\_resource\_tags) | Tags for the resources | `map(string)` | `{}` | no |
 
 ## Outputs
 
@@ -142,7 +144,8 @@ No modules.
 | <a name="output_level_4_ous_details"></a> [level\_4\_ous\_details](#output\_level\_4\_ous\_details) | Details of Level 4 Organizational Units. |
 | <a name="output_level_5_ous_details"></a> [level\_5\_ous\_details](#output\_level\_5\_ous\_details) | Details of Level 5 Organizational Units. |
 | <a name="output_organization_id"></a> [organization\_id](#output\_organization\_id) | The ID of the AWS Organization. |
-| <a name="output_organizational_units_paths_ids"></a> [organizational\_units\_paths\_ids](#output\_organizational\_units\_paths\_ids) | Map of full OU-Path and OU-ID. |
+| <a name="output_ou_ids_to_ou_path"></a> [ou\_ids\_to\_ou\_path](#output\_ou\_ids\_to\_ou\_path) | Map of OU-ID to full OU-Path in the format '/root/a/b/'. |
+| <a name="output_ou_paths_to_ou_id"></a> [ou\_paths\_to\_ou\_id](#output\_ou\_paths\_to\_ou\_id) | Map of full OU-Path in the format '/root/a/b/' to OU-ID. |
 | <a name="output_ou_scp_assignment"></a> [ou\_scp\_assignment](#output\_ou\_scp\_assignment) | SCP assignments. |
 | <a name="output_ou_transformed"></a> [ou\_transformed](#output\_ou\_transformed) | List of transformed OUs. |
 | <a name="output_root_ou_id"></a> [root\_ou\_id](#output\_root\_ou\_id) | The ID of the root organizational unit. |
@@ -162,7 +165,7 @@ See [LICENSE][license-url] for full details.
 [acai-shield]: https://img.shields.io/badge/maintained_by-acai.gmbh-CB224B?style=flat
 [acai-docs-shield]: https://img.shields.io/badge/documentation-docs.acai.gmbh-CB224B?style=flat
 [acai-url]: https://acai.gmbh
-[acai-docs-url]: https://docs.acai.gmbh
+[acai-docs-url]: https://docs.acai.gmbh/solution-acf/10_overview/
 [module-version-shield]: https://img.shields.io/badge/module_version-1.2.0-CB224B?style=flat
 [terraform-version-shield]: https://img.shields.io/badge/tf-%3E%3D1.3.10-blue.svg?style=flat&color=blueviolet
 [trivy-shield]: https://img.shields.io/badge/trivy-passed-green

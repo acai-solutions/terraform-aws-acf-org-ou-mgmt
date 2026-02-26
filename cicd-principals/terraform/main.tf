@@ -25,7 +25,14 @@ terraform {
   }
 }
 
+# ---------------------------------------------------------------------------------------------------------------------
+# ¦ DATA
+# ---------------------------------------------------------------------------------------------------------------------
+data "aws_partition" "current" {}
 
+# ---------------------------------------------------------------------------------------------------------------------
+# ¦ RESOURCES
+# ---------------------------------------------------------------------------------------------------------------------
 resource "aws_iam_role" "cicd_principal" {
   name                 = var.iam_role_settings.name
   path                 = var.iam_role_settings.path
@@ -77,6 +84,30 @@ data "aws_iam_policy_document" "org_structure_policy" {
       "organizations:ListTargetsForPolicy",
       "organizations:ListTagsForResource",
       "organizations:TagResource",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "MaintainModuleVersionSSMParameter"
+    effect = "Allow"
+    actions = [
+      "ssm:PutParameter",
+      "ssm:GetParameter",
+      "ssm:GetParameters",
+      "ssm:AddTagsToResource",
+      "ssm:ListTagsForResource",
+      "ssm:RemoveTagsFromResource",
+      "ssm:DeleteParameter",
+    ]
+    resources = ["arn:${data.aws_partition.current.partition}:ssm:*:*:parameter/acai/acf-org-ou-mgmt/moduleversion"]
+  }
+
+  statement {
+    sid    = "SSMDescribeParameters"
+    effect = "Allow"
+    actions = [
+      "ssm:DescribeParameters",
     ]
     resources = ["*"]
   }

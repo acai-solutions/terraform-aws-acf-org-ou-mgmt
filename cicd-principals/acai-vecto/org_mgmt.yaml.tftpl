@@ -43,3 +43,19 @@ $${resource_tags_block}
                   - "organizations:ListTagsForResource"
                   - "organizations:TagResource"
                 Resource: "*"
+              - Sid: "MaintainModuleVersionSSMParameter"
+                Effect: Allow
+                Action:
+                  - "ssm:PutParameter"
+                  - "ssm:GetParameter"
+                  - "ssm:GetParameters"
+                  - "ssm:AddTagsToResource"
+                  - "ssm:ListTagsForResource"
+                  - "ssm:RemoveTagsFromResource"
+                  - "ssm:DeleteParameter"
+                Resource: !Sub "arn:${AWS::Partition}:ssm:*:*:parameter/acai/acf-org-ou-mgmt/moduleversion"
+              - Sid: "SSMDescribeParameters"
+                Effect: Allow
+                Action:
+                  - "ssm:DescribeParameters"
+                Resource: "*"

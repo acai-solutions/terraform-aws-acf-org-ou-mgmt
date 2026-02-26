@@ -80,3 +80,6 @@ coverage.xml
 # IDE/editor settings (optional)
 .vscode/
 .idea/
+
+run.ps1
+backend.json
