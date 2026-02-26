@@ -22,7 +22,7 @@ output "test_success1" {
 
 output "test_success2" {
   description = "Check if specific OU-Path exists."
-  value       = lookup(module.example_complete.organizational_units_paths_ids, "/root/WorkloadAccounts/BusinessUnit_1/Prod/", null) != null
+  value       = lookup(module.example_complete.ou_paths_to_ou_id, "/root/WorkloadAccounts/BusinessUnit_1/Prod/", null) != null
 }
 
 output "example_reporting" {
@@ -32,5 +32,5 @@ output "example_reporting" {
 
 output "test_success3" {
   description = "Check if specific OU-Path exists."
-  value       = contains(keys(module.example_reporting.ous_paths), "/root/WorkloadAccounts/BusinessUnit_1/Prod/")
+  value       = contains(keys(module.example_reporting.ou_paths_to_ou_id), "/root/WorkloadAccounts/BusinessUnit_1/Prod/")
 }

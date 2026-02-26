@@ -1,6 +1,0 @@
-{
-  "bucket"                      : "aws-testbed-terraform-state",
-  "dynamodb_table"              : "aws-testbed-terraform-locks",
-  "region"                      : "eu-central-1",
-  "key"                         : "terratest/terraform.tfstate"
-}

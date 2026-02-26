@@ -6,7 +6,6 @@
 **/.terraform/*
 
 # .tfstate files
-run.ps1
 *.tfstate
 *.tfstate.*
 
@@ -81,3 +80,6 @@ coverage.xml
 # IDE/editor settings (optional)
 .vscode/
 .idea/
+
+run.ps1
+backend.json
