@@ -26,6 +26,11 @@ terraform {
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
+# ¦ DATA
+# ---------------------------------------------------------------------------------------------------------------------
+data "aws_partition" "current" {}
+
+# ---------------------------------------------------------------------------------------------------------------------
 # ¦ CREATE PROVISIONER
 # ---------------------------------------------------------------------------------------------------------------------
 module "create_provisioner" {
@@ -33,7 +38,7 @@ module "create_provisioner" {
 
   iam_role_settings = {
     name             = "cicd_provisioner"
-    aws_trustee_arns = ["arn:aws:iam::471112796356:root"]
+    aws_trustee_arns = ["arn:${data.aws_partition.current.partition}:iam::${var.account_ids.org_mgmt}:root"]
   }
   providers = {
     aws = aws.org_mgmt
