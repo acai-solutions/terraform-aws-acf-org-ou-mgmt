@@ -11,23 +11,21 @@
 # ¦ REQUIREMENTS
 # ---------------------------------------------------------------------------------------------------------------------
 terraform {
-  # This module is only being tested with Terraform 1.0 and newer.
-  required_version = ">= 1.3.10"
+  required_version = ">= 1.5.0"
 
   required_providers {
     aws = {
-      source                = "hashicorp/aws"
-      version               = ">= 4.0"
-      configuration_aliases = []
+      source  = "hashicorp/aws"
+      version = ">= 6.0"
     }
   }
 }
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ DATA
 # ---------------------------------------------------------------------------------------------------------------------
 data "aws_organizations_organization" "organization" {}
-
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -42,6 +40,7 @@ resource "aws_ssm_parameter" "product_version" {
   name           = lower("/acai/acf-org-ou-mgmt/moduleversion")
   type           = "String"
   insecure_value = local.module_version
+  overwrite      = true
   tags           = local.module_tags
 }
 
