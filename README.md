@@ -1,4 +1,4 @@
-# terraform-aws-acf-org-ou-mgmt Terraform module
+# AWS Organization Unit Management - ACF Terraform Module
 
 <!-- LOGO -->
 <a href="https://acai.gmbh">    
@@ -8,11 +8,13 @@
 <!-- SHIELDS -->
 [![Maintained by acai.gmbh][acai-shield]][acai-url]
 [![documentation][acai-docs-shield]][acai-docs-url]  
-![module-version-shield]
-![terraform-version-shield]  
+![module-version-shield]  
+![terraform-tested-shield]
+![opentofu-tested-shield]  
+![aws-tested-shield]
+![aws-esc-tested-shield]  
 ![trivy-shield]
 ![checkov-shield]
-[![Latest Release][release-shield]][release-url]
 
 <!-- BEGIN_ACAI_DOCS -->
 [Terraform][terraform-url] module to deploy the AWS Organization Unit hierarchy
@@ -97,14 +99,14 @@ module "aws_organization_units" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.10 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.0 |
 
 ## Modules
 
@@ -161,18 +163,25 @@ This module is maintained by [ACAI GmbH][acai-url].
 
 See [LICENSE][license-url] for full details.
 
+<!-- COPYRIGHT -->
+<br />
+<br />
+<p align="center">Copyright ACAI GmbH</p>
+
 <!-- MARKDOWN LINKS & IMAGES -->
 [acai-shield]: https://img.shields.io/badge/maintained_by-acai.gmbh-CB224B?style=flat
-[acai-docs-shield]: https://img.shields.io/badge/documentation-docs.acai.gmbh-CB224B?style=flat
 [acai-url]: https://acai.gmbh
+[acai-docs-shield]: https://img.shields.io/badge/documentation-docs.acai.gmbh-CB224B?style=flat
 [acai-docs-url]: https://docs.acai.gmbh/solution-acf/10_overview/
 [module-version-shield]: https://img.shields.io/badge/module_version-1.3.0-CB224B?style=flat
-[terraform-version-shield]: https://img.shields.io/badge/tf-%3E%3D1.3.10-blue.svg?style=flat&color=blueviolet
+[module-release-url]: ./releases
+[terraform-tested-shield]: https://img.shields.io/badge/terraform-%3E%3D1.5.7_tested-844FBA?style=flat&logo=terraform&logoColor=white
+[opentofu-tested-shield]: https://img.shields.io/badge/opentofu-%3E%3D1.6_tested-FFDA18?style=flat&logo=opentofu&logoColor=black
+[aws-tested-shield]: https://img.shields.io/badge/AWS-%E2%9C%93_tested-FF9900?style=flat&logo=amazonaws&logoColor=white
+[aws-esc-tested-shield]: https://img.shields.io/badge/AWS_ESC-%E2%9C%93_tested-003399?style=flat&logo=amazonaws&logoColor=white
 [trivy-shield]: https://img.shields.io/badge/trivy-passed-green
 [checkov-shield]: https://img.shields.io/badge/checkov-passed-green
-[release-shield]: https://img.shields.io/github/v/release/acai-solutions/terraform-aws-acf-org-ou-mgmt?style=flat&color=success
-[release-url]: https://github.com/acai-solutions/terraform-aws-acf-org-ou-mgmt/releases
-[license-url]: https://github.com/acai-solutions/terraform-aws-acf-org-ou-mgmt/tree/main/LICENSE.md
+[architecture]: ./docs/terraform-aws-acf-org-ou-mgmt.png
+[license-url]: ./LICENSE.md
 [terraform-url]: https://www.terraform.io
 [aws-url]: https://aws.amazon.com
-[architecture]: ./docs/terraform-aws-acf-org-ou-mgmt.png

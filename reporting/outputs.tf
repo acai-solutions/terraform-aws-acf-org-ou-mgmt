@@ -9,7 +9,6 @@
 # For commercial licensing, contact: contact@acai.gmbh
 
 
-
 output "root_ou" {
   value = local.level_0_ous_path
 }
@@ -34,14 +33,7 @@ output "level_5_ous_paths" {
   value = local.level_5_ous_paths
 }
 
-
 output "ou_paths_to_ou_id" {
-  value = merge(
-    local.level_0_ous_path,
-    local.level_1_ous_paths,
-    local.level_2_ous_paths,
-    local.level_3_ous_paths,
-    local.level_4_ous_paths,
-    local.level_5_ous_paths
-  )
+  description = "Map of full OU-Path to OU-ID. Includes all nesting levels without depth limitation."
+  value       = local.ou_paths_to_ou_id
 }

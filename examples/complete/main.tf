@@ -14,44 +14,22 @@
 # ¦ VERSIONS
 # ---------------------------------------------------------------------------------------------------------------------
 terraform {
-  required_version = ">= 1.3.0"
+  required_version = ">= 1.5.0"
 
   required_providers {
     aws = {
-      source                = "hashicorp/aws"
-      version               = ">= 4.0"
-      configuration_aliases = []
+      source  = "hashicorp/aws"
+      version = ">= 6.0"
     }
   }
 }
 
+
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ DATA
 # ---------------------------------------------------------------------------------------------------------------------
-data "aws_partition" "current" {}
+data "aws_partition" "current" { provider = aws.org_mgmt }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# ¦ CREATE PROVISIONER
-# ---------------------------------------------------------------------------------------------------------------------
-module "create_provisioner" {
-  source = "../../cicd-principals/terraform"
-
-  iam_role_settings = {
-    name             = "cicd_provisioner"
-    aws_trustee_arns = ["arn:${data.aws_partition.current.partition}:iam::${var.account_ids.org_mgmt}:root"]
-  }
-  providers = {
-    aws = aws.org_mgmt
-  }
-}
-
-provider "aws" {
-  region = var.aws_region
-  alias  = "cicd_provisioner"
-  assume_role {
-    role_arn = module.create_provisioner.iam_role_arn
-  }
-}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ TEST SCP

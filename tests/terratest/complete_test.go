@@ -1,29 +1,12 @@
 package test
 
 import (
-	"os/exec"
-	"strings"
 	"testing"
+	"time"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
-
-func listTerraformState(t *testing.T, dir string) []string {
-	cmd := exec.Command("terraform", "state", "list")
-	cmd.Dir = dir // Set the working directory to where your Terraform files are.
-
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Fatalf("Failed to list Terraform state: %s\nOutput:\n%s", err, string(output))
-	}
-	t.Logf("State List Output:\n%s", string(output))
-
-	// Convert output to a slice for easier handling
-	// You might need to modify the parsing based on your specific output format or needs
-	lines := strings.Split(string(output), "\n")
-	return lines
-}
 
 func TestExampleComplete(t *testing.T) {
 	// retryable errors in terraform testing.
@@ -35,10 +18,11 @@ func TestExampleComplete(t *testing.T) {
 
 	// Create IAM Role
 	terraformPreparation := &terraform.Options{
-		TerraformDir:  terraformDir,
-		NoColor:       false,
-		Lock:          true,
-		BackendConfig: backendConfig,
+		TerraformBinary: getHclBinary(),
+		TerraformDir:    terraformDir,
+		NoColor:         false,
+		Lock:            true,
+		BackendConfig:   backendConfig,
 		Targets: []string{
 			"module.create_provisioner",
 			"aws_organizations_policy.scp_example",
@@ -46,11 +30,16 @@ func TestExampleComplete(t *testing.T) {
 	}
 	terraform.InitAndApply(t, terraformPreparation)
 
+	// Wait for IAM role propagation (eventual consistency)
+	t.Log("Waiting 10 seconds for IAM role propagation...")
+	time.Sleep(10 * time.Second)
+
 	terraformModule := &terraform.Options{
-		TerraformDir:  terraformDir,
-		NoColor:       false,
-		Lock:          true,
-		BackendConfig: backendConfig,
+		TerraformBinary: getHclBinary(),
+		TerraformDir:    terraformDir,
+		NoColor:         false,
+		Lock:            true,
+		BackendConfig:   backendConfig,
 		Targets: []string{
 			"module.example_complete",
 		},
@@ -58,13 +47,11 @@ func TestExampleComplete(t *testing.T) {
 	terraform.InitAndApply(t, terraformModule)
 
 	terraformReport := &terraform.Options{
-		TerraformDir:  terraformDir,
-		NoColor:       false,
-		Lock:          true,
-		BackendConfig: backendConfig,
-		Targets: []string{
-			"module.example_reporting",
-		},
+		TerraformBinary: getHclBinary(),
+		TerraformDir:    terraformDir,
+		NoColor:         false,
+		Lock:            true,
+		BackendConfig:   backendConfig,
 	}
 	terraform.InitAndApply(t, terraformReport)
 
@@ -81,8 +68,7 @@ func TestExampleComplete(t *testing.T) {
 	assert.Equal(t, "true", testSuccess2Output, "The test_success2 output is not true")
 	assert.Equal(t, "true", testSuccess3Output, "The test_success3 output is not true")
 
-	terraform.Destroy(t, terraformReport)
 	terraform.Destroy(t, terraformModule)
-
+	terraform.Destroy(t, terraformReport)
 	terraform.Destroy(t, terraformPreparation)
 }
