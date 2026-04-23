@@ -18,10 +18,10 @@ func TestExampleComplete(t *testing.T) {
 	// Create IAM Role
 	terraformPreparation := &terraform.Options{
 		TerraformBinary: getHclBinary(),
-		TerraformDir:  terraformDir,
-		NoColor:       false,
-		Lock:          true,
-		BackendConfig: backendConfig,
+		TerraformDir:    terraformDir,
+		NoColor:         false,
+		Lock:            true,
+		BackendConfig:   backendConfig,
 		Targets: []string{
 			"module.create_provisioner",
 			"aws_organizations_policy.scp_example",
@@ -31,10 +31,10 @@ func TestExampleComplete(t *testing.T) {
 
 	terraformModule := &terraform.Options{
 		TerraformBinary: getHclBinary(),
-		TerraformDir:  terraformDir,
-		NoColor:       false,
-		Lock:          true,
-		BackendConfig: backendConfig,
+		TerraformDir:    terraformDir,
+		NoColor:         false,
+		Lock:            true,
+		BackendConfig:   backendConfig,
 		Targets: []string{
 			"module.example_complete",
 		},
@@ -43,13 +43,10 @@ func TestExampleComplete(t *testing.T) {
 
 	terraformReport := &terraform.Options{
 		TerraformBinary: getHclBinary(),
-		TerraformDir:  terraformDir,
-		NoColor:       false,
-		Lock:          true,
-		BackendConfig: backendConfig,
-		Targets: []string{
-			"module.example_reporting",
-		},
+		TerraformDir:    terraformDir,
+		NoColor:         false,
+		Lock:            true,
+		BackendConfig:   backendConfig,
 	}
 	terraform.InitAndApply(t, terraformReport)
 
