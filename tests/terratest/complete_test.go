@@ -1,29 +1,11 @@
 package test
 
 import (
-	"os/exec"
-	"strings"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
-
-func listTerraformState(t *testing.T, dir string) []string {
-	cmd := exec.Command("terraform", "state", "list")
-	cmd.Dir = dir // Set the working directory to where your Terraform files are.
-
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Fatalf("Failed to list Terraform state: %s\nOutput:\n%s", err, string(output))
-	}
-	t.Logf("State List Output:\n%s", string(output))
-
-	// Convert output to a slice for easier handling
-	// You might need to modify the parsing based on your specific output format or needs
-	lines := strings.Split(string(output), "\n")
-	return lines
-}
 
 func TestExampleComplete(t *testing.T) {
 	// retryable errors in terraform testing.
@@ -35,6 +17,7 @@ func TestExampleComplete(t *testing.T) {
 
 	// Create IAM Role
 	terraformPreparation := &terraform.Options{
+		TerraformBinary: getHclBinary(),
 		TerraformDir:  terraformDir,
 		NoColor:       false,
 		Lock:          true,
@@ -47,6 +30,7 @@ func TestExampleComplete(t *testing.T) {
 	terraform.InitAndApply(t, terraformPreparation)
 
 	terraformModule := &terraform.Options{
+		TerraformBinary: getHclBinary(),
 		TerraformDir:  terraformDir,
 		NoColor:       false,
 		Lock:          true,
@@ -58,6 +42,7 @@ func TestExampleComplete(t *testing.T) {
 	terraform.InitAndApply(t, terraformModule)
 
 	terraformReport := &terraform.Options{
+		TerraformBinary: getHclBinary(),
 		TerraformDir:  terraformDir,
 		NoColor:       false,
 		Lock:          true,
