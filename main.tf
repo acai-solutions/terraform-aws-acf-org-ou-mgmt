@@ -32,7 +32,7 @@ data "aws_organizations_organization" "organization" {}
 # ¦ MODULE VERSION AS PARAMETER STORE ENTRY
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
-  module_version = /*inject_version_start*/ "1.3.0" /*inject_version_end*/
+  module_version = /*inject_version_start*/ "1.3.1" /*inject_version_end*/
 }
 
 resource "aws_ssm_parameter" "product_version" {
