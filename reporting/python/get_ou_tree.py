@@ -36,7 +36,11 @@ Description:
 import argparse
 import logging
 
-from ou_path_resolver import OuPathResolver, create_organizations_client, terraform_json_output
+from ou_path_resolver import (
+    OuPathResolver,
+    create_organizations_client,
+    terraform_json_output,
+)
 
 # Configure logging (stdout reserved for final JSON output)
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
