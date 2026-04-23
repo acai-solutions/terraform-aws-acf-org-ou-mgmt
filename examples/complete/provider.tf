@@ -15,9 +15,6 @@
 provider "aws" {
   region = var.aws_region
   alias  = "org_mgmt"
-  endpoints {
-    sts = "https://sts.${var.aws_region}.${var.aws_endpoint_domain}"
-  }
 }
 
 provider "aws" {
@@ -25,9 +22,6 @@ provider "aws" {
   alias  = "core_logging"
   assume_role {
     role_arn = "arn:${var.aws_partition}:iam::${var.account_ids.core_logging}:role/${var.iam_role_name}"
-  }
-  endpoints {
-    sts = "https://sts.${var.aws_region}.${var.aws_endpoint_domain}"
   }
 }
 
@@ -37,9 +31,6 @@ provider "aws" {
   assume_role {
     role_arn = "arn:${var.aws_partition}:iam::${var.account_ids.core_security}:role/${var.iam_role_name}"
   }
-  endpoints {
-    sts = "https://sts.${var.aws_region}.${var.aws_endpoint_domain}"
-  }
 }
 
 provider "aws" {
@@ -48,9 +39,6 @@ provider "aws" {
   assume_role {
     role_arn = "arn:${var.aws_partition}:iam::${var.account_ids.core_backup}:role/${var.iam_role_name}"
   }
-  endpoints {
-    sts = "https://sts.${var.aws_region}.${var.aws_endpoint_domain}"
-  }
 }
 
 provider "aws" {
@@ -58,8 +46,5 @@ provider "aws" {
   alias  = "workload"
   assume_role {
     role_arn = "arn:${var.aws_partition}:iam::${var.account_ids.workload}:role/${var.iam_role_name}"
-  }
-  endpoints {
-    sts = "https://sts.${var.aws_region}.${var.aws_endpoint_domain}"
   }
 }

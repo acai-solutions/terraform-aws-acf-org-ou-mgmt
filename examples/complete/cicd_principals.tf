@@ -30,7 +30,4 @@ provider "aws" {
   assume_role {
     role_arn = module.create_provisioner.iam_role_arn
   }
-  endpoints {
-    sts = "https://sts.${var.aws_region}.${var.aws_endpoint_domain}"
-  }
 }
