@@ -2,6 +2,7 @@ package test
 
 import (
 	"testing"
+	"time"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
@@ -28,6 +29,10 @@ func TestExampleComplete(t *testing.T) {
 		},
 	}
 	terraform.InitAndApply(t, terraformPreparation)
+
+	// Wait for IAM role propagation (eventual consistency)
+	t.Log("Waiting 10 seconds for IAM role propagation...")
+	time.Sleep(10 * time.Second)
 
 	terraformModule := &terraform.Options{
 		TerraformBinary: getHclBinary(),
