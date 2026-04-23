@@ -37,7 +37,7 @@ module "create_provisioner" {
   source = "../../cicd-principals/terraform"
 
   iam_role_settings = {
-    name             = "cicd_provisioner"
+    name             = "ou_mgmt_cicd_provisioner"
     aws_trustee_arns = ["arn:${data.aws_partition.current.partition}:iam::${var.account_ids.org_mgmt}:root"]
   }
   providers = {
