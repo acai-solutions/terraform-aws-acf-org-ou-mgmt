@@ -63,7 +63,20 @@ func TestExampleComplete(t *testing.T) {
 	assert.Equal(t, "true", testSuccess2Output, "The test_success2 output is not true")
 	assert.Equal(t, "true", testSuccess3Output, "The test_success3 output is not true")
 
-	terraform.Destroy(t, terraformReport)
+	// Destroy in reverse order with explicit targets to avoid race conditions.
+	// A full destroy (no targets) can delete the IAM role (module.create_provisioner)
+	// before all OUs are removed, causing AccessDeniedException on remaining OU deletes.
+	terraformReportDestroy := &terraform.Options{
+		TerraformBinary: getHclBinary(),
+		TerraformDir:    terraformDir,
+		NoColor:         false,
+		Lock:            true,
+		BackendConfig:   backendConfig,
+		Targets: []string{
+			"module.example_reporting",
+		},
+	}
+	terraform.Destroy(t, terraformReportDestroy)
 	terraform.Destroy(t, terraformModule)
 
 	terraform.Destroy(t, terraformPreparation)
