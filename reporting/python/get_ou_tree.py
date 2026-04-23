@@ -113,9 +113,7 @@ def main():
                 f"Found: {found_org_id}/{found_root_ou_id}"
             )
 
-        ou_tree: Dict[str, Any] = {
-            "/root/": {"ou_id": found_root_ou_id, "level": 0}
-        }
+        ou_tree: Dict[str, Any] = {"/root/": {"ou_id": found_root_ou_id, "level": 0}}
         _walk_ou_tree(boto3_client, found_root_ou_id, "/root", 1, ou_tree)
 
         # Keep Terraform external data format: values must be strings
@@ -126,7 +124,11 @@ def main():
 
 
 def _walk_ou_tree(
-    boto3_client, parent_id: str, parent_path: str, current_level: int, result: Dict[str, Any]
+    boto3_client,
+    parent_id: str,
+    parent_path: str,
+    current_level: int,
+    result: Dict[str, Any],
 ) -> None:
     """Recursively walk the OU tree, adding each OU to result."""
     paginator = boto3_client.get_paginator("list_organizational_units_for_parent")
@@ -135,7 +137,11 @@ def _walk_ou_tree(
             ou_path = f"{parent_path}/{ou['Name']}/"
             result[ou_path] = {"ou_id": ou["Id"], "level": current_level}
             _walk_ou_tree(
-                boto3_client, ou["Id"], f"{parent_path}/{ou['Name']}", current_level + 1, result
+                boto3_client,
+                ou["Id"],
+                f"{parent_path}/{ou['Name']}",
+                current_level + 1,
+                result,
             )
 
 
