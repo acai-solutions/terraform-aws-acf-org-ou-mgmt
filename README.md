@@ -15,7 +15,6 @@
 ![aws-esc-tested-shield]  
 ![trivy-shield]
 ![checkov-shield]
-[![Latest Release][release-shield]][release-url]
 
 <!-- BEGIN_ACAI_DOCS -->
 [Terraform][terraform-url] module to deploy the AWS Organization Unit hierarchy
