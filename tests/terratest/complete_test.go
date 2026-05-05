@@ -55,10 +55,10 @@ func TestExampleComplete(t *testing.T) {
 	}
 	terraform.InitAndApply(t, terraformReport)
 
-	// Retrieve the 'test_success' outputs
-	testSuccess1Output := terraform.Output(t, terraformModule, "test_success1")
-	testSuccess2Output := terraform.Output(t, terraformModule, "test_success2")
-	testSuccess3Output := terraform.Output(t, terraformReport, "test_success3")
+	// Retrieve the 'test_success' outputs (warnings stripped)
+	testSuccess1Output := outputClean(t, terraformModule, "test_success1")
+	testSuccess2Output := outputClean(t, terraformModule, "test_success2")
+	testSuccess3Output := outputClean(t, terraformReport, "test_success3")
 	t.Logf("testSuccess1Output: %s", testSuccess1Output)
 	t.Logf("testSuccess2Output: %s", testSuccess2Output)
 	t.Logf("testSuccess3Output: %s", testSuccess3Output)
